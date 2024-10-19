@@ -27,9 +27,11 @@ import { AlertModal } from "@/components/modals/alert-modal";
 import {
 	Select,
 	SelectContent,
+	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import Image from "next/image";
 
 const formSchema = z.object({
 	name: z.string().min(1, { message: "Name is required" }),
@@ -70,13 +72,13 @@ export const CategoryForm = ({
 			setLoading(true);
 			if (initialData) {
 				await axios.patch(
-					`/api/${params.storeId}/billboards/${params.billboardId}`,
+					`/api/${params.storeId}/categories/${params.categoryId}`,
 					data
 				);
 			} else {
-				await axios.post(`/api/${params.storeId}/billboards`, data);
+				await axios.post(`/api/${params.storeId}/categories`, data);
 			}
-			router.push(`/${params.storeId}/billboards`);
+			router.push(`/${params.storeId}/categories`);
 			router.refresh();
 			toast.success(toastMessage);
 		} catch (error) {
@@ -90,14 +92,14 @@ export const CategoryForm = ({
 		try {
 			setLoading(true);
 			await axios.delete(
-				`/api/${params.storeId}/billboards/${params.billboardId}`
+				`/api/${params.storeId}/categories/${params.categoryId}`
 			);
 			router.refresh();
-			router.push(`/${params.storeId}/billboards`);
-			toast.success("Billboard deleted.");
+			router.push(`/${params.storeId}/categories`);
+			toast.success("Category deleted.");
 		} catch (error) {
 			toast.error(
-				"Make sure you remove all categories using this billboard first."
+				"Make sure you remove all products using this category first."
 			);
 		} finally {
 			setLoading(false);
@@ -156,7 +158,7 @@ export const CategoryForm = ({
 							name="billboardId"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Billboard Id</FormLabel>
+									<FormLabel>Billboard</FormLabel>
 									<Select
 										disabled={loading}
 										onValueChange={field.onChange}
@@ -168,17 +170,25 @@ export const CategoryForm = ({
 												<SelectValue
 													defaultValue={field.value}
 													placeholder="Select a billboard"
-												>
-													<SelectContent>
-														{billboards.map((billboard) => (
-															<Select key={billboard.id} value={billboard.id}>
-																{billboard.label}
-															</Select>
-														))}
-													</SelectContent>
-												</SelectValue>
+												/>
 											</SelectTrigger>
 										</FormControl>
+										<SelectContent>
+											{billboards.map((billboard) => (
+												<SelectItem key={billboard.id} value={billboard.id}>
+													<div className="flex items-center justify-between gap-x-2">
+														<Image
+															className="rounded-full object-cover"
+															src={billboard.imageUrl}
+															alt={billboard.label}
+															width={20}
+															height={20}
+														/>
+														{billboard.label}
+													</div>
+												</SelectItem>
+											))}
+										</SelectContent>
 									</Select>
 									<FormMessage />
 								</FormItem>
