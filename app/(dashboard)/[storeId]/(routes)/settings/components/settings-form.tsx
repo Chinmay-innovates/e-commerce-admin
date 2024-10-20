@@ -92,7 +92,7 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
 				<Button
 					disabled={loading}
 					variant="destructive"
-					size="sm"
+					size="icon"
 					onClick={() => setOpen(true)}
 				>
 					<Trash className="size-4" />

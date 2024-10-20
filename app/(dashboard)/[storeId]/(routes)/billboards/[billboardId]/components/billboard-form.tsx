@@ -112,7 +112,7 @@ export const BillboardForm = ({ initialData }: BillboardFormProps) => {
 					<Button
 						disabled={loading}
 						variant="destructive"
-						size="sm"
+						size="icon"
 						onClick={() => setOpen(true)}
 					>
 						<Trash className="h-4 w-4" />
