@@ -31,7 +31,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import Image from "next/image";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 const formSchema = z.object({
 	name: z.string().min(1, { message: "Name is required" }),
@@ -177,13 +177,12 @@ export const CategoryForm = ({
 											{billboards.map((billboard) => (
 												<SelectItem key={billboard.id} value={billboard.id}>
 													<div className="flex items-center justify-between gap-x-2">
-														<Image
-															className="rounded-full object-cover"
-															src={billboard.imageUrl}
-															alt={billboard.label}
-															width={20}
-															height={20}
-														/>
+														<Avatar className="size-6">
+															<AvatarImage
+																src={billboard.imageUrl}
+																alt={billboard.label}
+															/>
+														</Avatar>
 														{billboard.label}
 													</div>
 												</SelectItem>
